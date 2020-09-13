@@ -39,6 +39,10 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+private:
+	cocos2d::TMXTiledMap* _tileMap;
+	cocos2d::TMXLayer* _background;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

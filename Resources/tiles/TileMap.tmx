@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <layer name="Background" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmmtOwzAMgAuIbVBgPCaeUsUEQ4Px6JF2NI7C0XCkVLKiprFdpwmsPz5VZYnjD9vVKq0qiqICanu9A+4j8OCco42Ju0b3S+AZeFNkBTyhM9aRfF5Q3KVzpgY4Zm3PG6IeDI+thewx1oNfj/eCNrOYrufDx0D1qFDc1yI8txtgAkwtM8K+jXNObJr/le9q1nwCZ8Dccu7U1neNmfdUyCnyOCHumRFzmgj2zf8ATb13weNmQG4J+RiugUOmh2/WteHm0PYckVArIjlfyyM1Uo9HAkPGkXqY7zxfgeuQcXa9r3Jj9MiL0SMvRo+8GD3yYvTIC67HHrCfIQeMHM3aI+A4Q0rkEcqxRGsWwGVCcF7m/gp5XHj2QM7frgf2T0XjQV0POf90ebh1a/s7Z22I/+4RWh/yCMXV6AlK/Fgemr3N8fDdt3n07VdOD0q9KPPRp1+5syStV24evj3c+lDnQ2NeOB4a86Ht0Wem+nhwe6Vv78fyKJU9KLOUqq98/c+ZBcmeHDy0Zim2h/TzWB7wXX5bot+KlPbeRxNT+rkEN+ai43kl6e/UGA/3XavxSPluyMW8O/4Cb8IJWw==
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="50" height="50">
+  <object name="SpawnPoint" x="80" y="299"/>
+ </objectgroup>
+</map>

@@ -67,9 +67,7 @@ bool HelloWorld::init()
         closeItem->getContentSize().height <= 0)
     {
         problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
+    } else {
         float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
         float y = origin.y + closeItem->getContentSize().height/2;
         closeItem->setPosition(Vec2(x,y));
@@ -86,13 +84,10 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
+    auto label = Label::createWithTTF("Tiled Game Example", "fonts/Marker Felt.ttf", 24);
+    if (label == nullptr) {
         problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
+    }  else {
         // position the label on the center of the screen
         label->setPosition(Vec2(origin.x + visibleSize.width/2,
                                 origin.y + visibleSize.height - label->getContentSize().height));
@@ -103,18 +98,22 @@ bool HelloWorld::init()
 
     // add "HelloWorld" splash screen"
     auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
+    if (sprite == nullptr) {
         problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
+    } else {
         // position the sprite on the center of the screen
         sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
+
+	_tileMap = new cocos2d::TMXTiledMap();
+	_tileMap->initWithTMXFile("tiles/TileMap.tmx");
+	_background = _tileMap->layerNamed("Background");
+
+	this->addChild(_tileMap);
+
     return true;
 }
 

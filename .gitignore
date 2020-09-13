@@ -5,6 +5,8 @@
 /proj.ios_mac/
 /proj.linux/
 /proj.win32/
-/Resources/
+/Resources/*
 .cocos-project.json
 CMakeLists.txt
+
+!Resources/tiles/
