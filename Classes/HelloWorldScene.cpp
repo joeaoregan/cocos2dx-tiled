@@ -33,6 +33,11 @@ cocos2d::Scene* HelloWorld::createScene()
 	HelloWorld* layer = HelloWorld::create();
 	scene->addChild(layer);
 
+	HudLayer* hud = new HudLayer();
+	hud->init();
+	scene->addChild(hud);
+	layer->_hud = hud;
+
     return scene;
 }
 
@@ -195,6 +200,8 @@ void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
 				if (collisionType.compare("Collect") == 0) {
 					_meta->removeTileAt(tileCoord); // Remove collision tile on meta layer
 					_foreground->removeTileAt(tileCoord); // Remove collectable tile on foreground layer
+					_numCollected++;
+					_hud->numCollectedChanged(_numCollected);
 				}
 			}
 		}		

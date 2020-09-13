@@ -26,6 +26,8 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "HudLayer.h"
+
 
 class HelloWorld : public cocos2d::CCLayer
 {
@@ -58,6 +60,9 @@ private:
 	cocos2d::TMXLayer* _meta;
 
 	cocos2d::Sprite* _player;
+
+	HudLayer* _hud;
+	int _numCollected;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
