@@ -110,13 +110,50 @@ bool HelloWorld::init()
 
 	_tileMap = new cocos2d::TMXTiledMap();
 	_tileMap->initWithTMXFile("tiles/TileMap.tmx");
-	_background = _tileMap->layerNamed("Background");
+	_background = _tileMap->getLayer("Background"); // layerNamed() deprecated
 
 	this->addChild(_tileMap);
+
+	//cocos2d::TMXObjectGroup* objectGroup = _tileMap->objectGroupNamed("Objects");
+	cocos2d::TMXObjectGroup* objectGroup = _tileMap->getObjectGroup("Objects");
+
+	if (objectGroup == NULL) {
+		// CCLog("tile map has no objects in object layer");
+		return false;
+	}
+
+	ValueMap spawnPoint = objectGroup->getObject("SpawnPoint");
+	int x = spawnPoint.at("x").asInt();
+	int y = spawnPoint.at("y").asInt();
+
+	_player = new cocos2d::Sprite();
+	_player->initWithFile("sprites/Player.png");
+	_player->setPosition(cocos2d::Vec2(x, y));
+
+	this->addChild(_player);
+	this->setViewPointCenter(_player->getPosition());
 
     return true;
 }
 
+void HelloWorld::setViewPointCenter(cocos2d::Vec2 position) {
+	cocos2d::Size winSize = cocos2d::Director::getInstance()->getWinSize();
+
+	int x = MAX(position.x, winSize.width / 2);
+	int y = MAX(position.y, winSize.height / 2);
+	x = MIN(x, (_tileMap->getMapSize().width * this->_tileMap->getTileSize().width) - winSize.width / 2);
+	y = MIN(y, (_tileMap->getMapSize().height * _tileMap->getTileSize().height) - winSize.height / 2);
+
+	cocos2d::Vec2 actualPosition = cocos2d::Vec2(x, y);
+	cocos2d::Vec2 centerOfView = cocos2d::Vec2(winSize.width / 2, winSize.height / 2);
+	//cocos2d::Vec2 viewPoint = centerOfView - actualPosition;
+	//cocos2d::Vec2 viewPoint;
+	//cocos2d::Vec2::subtract(centerOfView, actualPosition, viewPoint);
+	cocos2d::Vec2 viewPoint = centerOfView;
+	viewPoint.subtract(actualPosition);
+
+	this->setPosition(viewPoint);
+}
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {

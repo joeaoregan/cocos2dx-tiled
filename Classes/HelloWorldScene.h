@@ -36,6 +36,8 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+
+	void setViewPointCenter(cocos2d::Vec2 position);
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
@@ -43,6 +45,8 @@ public:
 private:
 	cocos2d::TMXTiledMap* _tileMap;
 	cocos2d::TMXLayer* _background;
+
+	cocos2d::Sprite* _player;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
