@@ -3,7 +3,12 @@
  <image source="meta_tiles.png" width="67" height="34"/>
  <tile id="0">
   <properties>
-   <property name="Collidable" type="bool" value="true"/>
+   <property name="collisionType" value="Collide"/>
+  </properties>
+ </tile>
+ <tile id="1">
+  <properties>
+   <property name="collisionType" value="Collect"/>
   </properties>
  </tile>
 </tileset>

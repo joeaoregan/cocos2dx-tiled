@@ -26,7 +26,6 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include <string>
 
 class HelloWorld : public cocos2d::CCLayer
 {
@@ -55,10 +54,10 @@ public:
 private:
 	cocos2d::TMXTiledMap* _tileMap;
 	cocos2d::TMXLayer* _background;
+	cocos2d::TMXLayer* _foreground; // Collectibles
+	cocos2d::TMXLayer* _meta;
 
 	cocos2d::Sprite* _player;
-
-	cocos2d::TMXLayer* _meta;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

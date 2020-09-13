@@ -115,8 +115,9 @@ bool HelloWorld::init()
 	_tileMap = new cocos2d::TMXTiledMap();
 	_tileMap->initWithTMXFile("tiles/TileMap.tmx");
 	_background = _tileMap->getLayer("Background"); // layerNamed() deprecated
-
 	this->addChild(_tileMap);
+
+	_foreground = _tileMap->getLayer("Foreground");
 
 	_meta = _tileMap->getLayer("Meta");
 	_meta->setVisible(false);
@@ -184,13 +185,19 @@ void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
 	int tileGid = _meta->getTileGIDAt(tileCoord);
 	if (tileGid) {
 		cocos2d::ValueMap properties = _tileMap->getPropertiesForGID(tileGid).asValueMap();
-
+		
 		if (properties.size() > 0) {
-			cocos2d::String collision = properties.at("Collidable").asString();
-			if (collision.boolValue()) {
-				return;
+			cocos2d::String collisionType = properties.at("collisionType").asString();
+			if (collisionType.boolValue()){ 
+				if (collisionType.compare("Collide") == 0) {
+					return; // Don't do anything else
+				}
+				if (collisionType.compare("Collect") == 0) {
+					_meta->removeTileAt(tileCoord); // Remove collision tile on meta layer
+					_foreground->removeTileAt(tileCoord); // Remove collectable tile on foreground layer
+				}
 			}
-		}
+		}		
 	}
 
 	_player->setPosition(position);
