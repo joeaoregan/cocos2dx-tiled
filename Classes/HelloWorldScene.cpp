@@ -27,9 +27,13 @@
 
 USING_NS_CC;
 
-Scene* HelloWorld::createScene()
+cocos2d::Scene* HelloWorld::createScene()
 {
-    return HelloWorld::create();
+	cocos2d::Scene* scene = cocos2d::Scene::create();
+	HelloWorld* layer = HelloWorld::create();
+	scene->addChild(layer);
+
+    return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -44,7 +48,7 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
@@ -114,11 +118,10 @@ bool HelloWorld::init()
 
 	this->addChild(_tileMap);
 
-	//cocos2d::TMXObjectGroup* objectGroup = _tileMap->objectGroupNamed("Objects");
-	cocos2d::TMXObjectGroup* objectGroup = _tileMap->getObjectGroup("Objects");
+	cocos2d::TMXObjectGroup* objectGroup = _tileMap->getObjectGroup("Objects"); // objectGroupNamed() deprecated
 
 	if (objectGroup == NULL) {
-		// CCLog("tile map has no objects in object layer");
+		// CCLog("tile map has no objects in object layer"); // not working
 		return false;
 	}
 
@@ -132,6 +135,11 @@ bool HelloWorld::init()
 
 	this->addChild(_player);
 	this->setViewPointCenter(_player->getPosition());
+	
+	auto eventListener = EventListenerTouchOneByOne::create();
+	eventListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	eventListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListener, _player);
 
     return true;
 }
@@ -147,8 +155,6 @@ void HelloWorld::setViewPointCenter(cocos2d::Vec2 position) {
 	cocos2d::Vec2 actualPosition = cocos2d::Vec2(x, y);
 	cocos2d::Vec2 centerOfView = cocos2d::Vec2(winSize.width / 2, winSize.height / 2);
 	//cocos2d::Vec2 viewPoint = centerOfView - actualPosition;
-	//cocos2d::Vec2 viewPoint;
-	//cocos2d::Vec2::subtract(centerOfView, actualPosition, viewPoint);
 	cocos2d::Vec2 viewPoint = centerOfView;
 	viewPoint.subtract(actualPosition);
 
@@ -164,6 +170,51 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
+}
 
+bool HelloWorld::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
+	return true;
+}
 
+void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
+	_player->setPosition(position);
+}
+
+void HelloWorld::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) {
+	cocos2d::Vec2 touchLocation = touch->getLocationInView();
+	touchLocation = cocos2d::Director::getInstance()->convertToGL(touchLocation);
+	touchLocation = this->convertToNodeSpace(touchLocation);
+
+	cocos2d::Vec2 playerPos = _player->getPosition();
+	//cocos2d::Vec2 diff = touchLocation - playerPos;
+	cocos2d::Vec2 diff = touchLocation;
+	diff.subtract(playerPos);
+
+	if (abs(diff.x) > abs(diff.y)) {
+		if (diff.x > 0) {
+			playerPos.x += _tileMap->getTileSize().width;
+		}
+		else {
+			playerPos.x -= _tileMap->getTileSize().width;
+		}
+	}
+	else {
+		if (diff.y > 0) {
+			playerPos.y += _tileMap->getTileSize().height;
+		}
+		else {
+			playerPos.y -= _tileMap->getTileSize().height;
+		}
+	}
+
+	// safety check on the bounds of the map
+	if (playerPos.x <= (_tileMap->getMapSize().width * _tileMap->getTileSize().width) &&
+		playerPos.y <= (_tileMap->getMapSize().height * _tileMap->getTileSize().height) &&
+		playerPos.y >= 0 &&
+		playerPos.x >= 0)
+	{
+		this->setPlayerPosition(playerPos);
+	}
+
+	this->setViewPointCenter(_player->getPosition());
 }

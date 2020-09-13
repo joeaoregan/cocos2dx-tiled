@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Scene
+class HelloWorld : public cocos2d::CCLayer
 {
 public:
     static cocos2d::Scene* createScene();
@@ -37,8 +37,14 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
 
+	// view port follows player
 	void setViewPointCenter(cocos2d::Vec2 position);
-    
+
+	// movement
+	void setPlayerPosition(cocos2d::Vec2 position);
+	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
