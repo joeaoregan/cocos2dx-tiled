@@ -61,6 +61,11 @@ bool HelloWorld::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("audio/pickup.wav");
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("audio/hit.wav");
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("audio/move.wav");
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("audio/TileMap.wav");
+
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
@@ -195,6 +200,7 @@ void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
 			cocos2d::String collisionType = properties.at("collisionType").asString();
 			if (collisionType.boolValue()){ 
 				if (collisionType.compare("Collide") == 0) {
+					CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("audio/hit.wav");
 					return; // Don't do anything else
 				}
 				if (collisionType.compare("Collect") == 0) {
@@ -202,11 +208,13 @@ void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
 					_foreground->removeTileAt(tileCoord); // Remove collectable tile on foreground layer
 					_numCollected++;
 					_hud->numCollectedChanged(_numCollected);
+					CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("audio/pickup.wav");
 				}
 			}
 		}		
 	}
 
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("audio/move.wav");
 	_player->setPosition(position);
 }
 
