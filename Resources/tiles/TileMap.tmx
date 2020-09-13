@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="2">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
   <image source="tmw_desert_spacing.png" width="265" height="199"/>
  </tileset>
- <layer name="Background" width="50" height="50">
+ <tileset firstgid="49" source="meta_tiles.tsx"/>
+ <layer id="1" name="Background" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmmtOwzAMgAuIbVBgPCaeUsUEQ4Px6JF2NI7C0XCkVLKiprFdpwmsPz5VZYnjD9vVKq0qiqICanu9A+4j8OCco42Ju0b3S+AZeFNkBTyhM9aRfF5Q3KVzpgY4Zm3PG6IeDI+thewx1oNfj/eCNrOYrufDx0D1qFDc1yI8txtgAkwtM8K+jXNObJr/le9q1nwCZ8Dccu7U1neNmfdUyCnyOCHumRFzmgj2zf8ATb13weNmQG4J+RiugUOmh2/WteHm0PYckVArIjlfyyM1Uo9HAkPGkXqY7zxfgeuQcXa9r3Jj9MiL0SMvRo+8GD3yYvTIC67HHrCfIQeMHM3aI+A4Q0rkEcqxRGsWwGVCcF7m/gp5XHj2QM7frgf2T0XjQV0POf90ebh1a/s7Z22I/+4RWh/yCMXV6AlK/Fgemr3N8fDdt3n07VdOD0q9KPPRp1+5syStV24evj3c+lDnQ2NeOB4a86Ht0Wem+nhwe6Vv78fyKJU9KLOUqq98/c+ZBcmeHDy0Zim2h/TzWB7wXX5bot+KlPbeRxNT+rkEN+ai43kl6e/UGA/3XavxSPluyMW8O/4Cb8IJWw==
   </data>
  </layer>
- <objectgroup name="Objects" width="50" height="50">
-  <object name="SpawnPoint" x="80" y="299"/>
+ <objectgroup id="2" name="Objects">
+  <object id="1" name="SpawnPoint" x="80" y="299"/>
  </objectgroup>
+ <layer id="3" name="Meta" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztl0EOwyAMBPOl/v9zPfSCKgjexRsHtCOhiAZsJpioua4fn+aqam2ebNocT3j0cipcFDnU8Xtx1R6qHP9xT9uPaK0j80Y5M0HfV735le8rdD13a0HdjTF1KP+TPM0JDjuT9Vyr9+cUD2OMMcYYk4Pimyn7u6V6HfZY86gGXQfq3/sdGYs+99M82Hob+Y76d2MjVHkga2LmsP3MekVqEI0xG59Vr+hZivJ2j1k9z/Kz8UZxImOZc4v2lR4R1Oc8Uiurtb+Lx0r8VQ8Expmd8waPTJQe7H0GZM8jY3Zo9qhtX6/Vo6g=
+  </data>
+ </layer>
 </map>

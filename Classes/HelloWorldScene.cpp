@@ -118,6 +118,9 @@ bool HelloWorld::init()
 
 	this->addChild(_tileMap);
 
+	_meta = _tileMap->getLayer("Meta");
+	_meta->setVisible(false);
+
 	cocos2d::TMXObjectGroup* objectGroup = _tileMap->getObjectGroup("Objects"); // objectGroupNamed() deprecated
 
 	if (objectGroup == NULL) {
@@ -177,6 +180,19 @@ bool HelloWorld::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
 }
 
 void HelloWorld::setPlayerPosition(cocos2d::Vec2 position) {
+	cocos2d::Vec2 tileCoord = this->tileCoordForPosition(position);
+	int tileGid = _meta->getTileGIDAt(tileCoord);
+	if (tileGid) {
+		cocos2d::ValueMap properties = _tileMap->getPropertiesForGID(tileGid).asValueMap();
+
+		if (properties.size() > 0) {
+			cocos2d::String collision = properties.at("Collidable").asString();
+			if (collision.boolValue()) {
+				return;
+			}
+		}
+	}
+
 	_player->setPosition(position);
 }
 
@@ -217,4 +233,10 @@ void HelloWorld::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) {
 	}
 
 	this->setViewPointCenter(_player->getPosition());
+}
+
+cocos2d::Vec2 HelloWorld::tileCoordForPosition(cocos2d::Vec2 position) {
+	int x = position.x / _tileMap->getTileSize().width; // tile x coord
+	int y = ((_tileMap->getMapSize().height * _tileMap->getTileSize().height) - position.y) / _tileMap->getTileSize().height; // tile y coord
+	return cocos2d::Vec2(x, y); // return tile coords
 }

@@ -26,6 +26,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include <string>
 
 class HelloWorld : public cocos2d::CCLayer
 {
@@ -45,6 +46,9 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
 
+	// collisions
+	cocos2d::Vec2 tileCoordForPosition(cocos2d::Vec2 position);
+
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
@@ -53,6 +57,8 @@ private:
 	cocos2d::TMXLayer* _background;
 
 	cocos2d::Sprite* _player;
+
+	cocos2d::TMXLayer* _meta;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
